@@ -1,4 +1,5 @@
 import com.tencent.kuikly.gradle.config.KuiklyConfig
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("multiplatform")
@@ -15,8 +16,10 @@ val KEY_PAGE_NAME = "pageName"
 kotlin {
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_1_8)
+                }
             }
         }
         publishLibraryVariants("release")
@@ -114,6 +117,14 @@ ksp {
     arg(KEY_PAGE_NAME, getPageName())
 }
 
+repositories {
+    mavenCentral()
+    google()
+    maven { url = uri("https://mirrors.tencent.com/nexus/repository/maven-tencent/") }
+    maven { url = uri("https://mirrors.tencent.com/repository/maven/MLivePlatform") }
+    maven { url = uri("https://mirrors.tencent.com/repository/maven/MLivePlatform-SNAPSHOT") }
+}
+
 dependencies {
     compileOnly("com.tencent.kuikly-open:core-ksp:${Version.getKuiklyVersion()}") {
         add("kspAndroid", this)
@@ -152,13 +163,8 @@ fun getLinkerArgs(): List<String> {
     return listOf()
 }
 
-// Kuikly 插件配置
 configure<KuiklyConfig> {
-    // JS 产物配置
     js {
-        // 构建产物名，与 KMM 插件 webpackTask#outputFileName 一致
         outputName("nativevue2")
-        // 可选：分包构建时的页面列表，如果为空则构建全部页面
-        // addSplitPage("route","home")
     }
 }

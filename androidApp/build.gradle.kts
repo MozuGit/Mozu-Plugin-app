@@ -11,7 +11,7 @@ android {
         minSdk = 23
         targetSdk = 30
         versionCode = 1
-        versionName = "1.0"
+        versionName = "Mozu1.0.0"
     }
 
     buildTypes {
@@ -25,6 +25,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

@@ -14,7 +14,17 @@ internal class HomePage : BasePager() {
     override fun body(): ViewBuilder {
         val ctx = this
         return {
-
+            attr {
+                allCenter()
+                backgroundColor(Color.WHITE)
+            }
+            Text {
+                attr {
+                    text("喵")
+                    fontSize(128f)
+                    color(Color.BLACK)
+                }
+            }
         }
     }
 }
